@@ -1,3 +1,4 @@
+require('chromedriver')
 const { Builder, By, Key, until, error } = require('selenium-webdriver');
 const { assert } = require('chai');
 import { globals } from '../global';
@@ -11,7 +12,7 @@ describe('SHE Software Test', function () {
                 await driver.get('https://stirling.she-development.net/automation');
             } catch (err) {
                 'Error! ' + err
-            }
+            };
         }),
             it('Login', async function () {
                 try {
@@ -22,7 +23,7 @@ describe('SHE Software Test', function () {
                     await driver.wait(until.titleIs('Home'), 5000);
                 } catch (err) {
                     'Error! ' + err;
-                }
+                };
             }),
             it('Access Air Emissions From Dropdown', async function () {
                 try {
@@ -39,7 +40,7 @@ describe('SHE Software Test', function () {
                     assert.include(airEmissionUrl, '/Environment/AirEmissions/Page/', 'URL DOES NOT MATCH');
                 } catch (err) {
                     'Error!' + err;
-                }
+                };
             }),
             it('Click Create New Record Button', async function () {
                 try {
@@ -51,10 +52,10 @@ describe('SHE Software Test', function () {
             it('Enter Description Text', async function () {
                 try {
                     await driver.wait(until.elementLocated(By.id('SheAirEmissions_Description')));
-                    await driver.findElement(By.id('SheAirEmissions_Description')).sendKeys(globals.variables.descriptionText)
+                    await driver.findElement(By.id('SheAirEmissions_Description')).sendKeys(globals.variables.descriptionText);
                 } catch (err) {
                     'Error! ' + err;
-                }
+                };
             }),
             it('Select Todays Date', async function () {
                 try {
@@ -64,7 +65,7 @@ describe('SHE Software Test', function () {
                     await driver.findElement(By.className('ui-state-highlight')).click();
                 } catch (err) {
                     'Error! ' + err;
-                }
+                };
             }),
             it('Click Save and Close button', async function () {
                 try {
@@ -73,7 +74,7 @@ describe('SHE Software Test', function () {
                     await driver.wait(until.elementLocated(By.className('create_record')));
                 } catch (err) {
                     'Error! ' + err;
-                }
+                };
             }),
             it('Verify Record Has Been Created', async function () {
                 try {
@@ -83,13 +84,13 @@ describe('SHE Software Test', function () {
                         const recordText = await allRecords[i].getText();
                         if (recordText.includes(globals.variables.descriptionText)) {
                             break;
-                        }
+                        };
                     };
 
                     globals.variables.createdRecord = allRecords[i];
                 } catch (err) {
                     'Error! ' + err;
-                }
+                };
             }),
             it('Open Cog Dropdown', async function () {
                 try {
@@ -99,14 +100,14 @@ describe('SHE Software Test', function () {
                     await cogDropdown.click();
                 } catch (err) {
                     'Error! ' + err;
-                }
+                };
             }),
             it('Click Delete', async function () {
                 try {
                     await globals.variables.dropdownMenu.findElement(By.className('deleteDialog')).click();
                 } catch (err) {
                     'Error! ' + err;
-                }
+                };
             }),
             it('Click Confirm Record Deletion', async function () {
                 try {
@@ -116,7 +117,7 @@ describe('SHE Software Test', function () {
                     await allPopUpButtons[0].click();
                 } catch (err) {
                     'Error! ' + err;
-                }
+                };
             }),
             it('Verify record has been deleted', async function() {
                 try {
@@ -126,14 +127,14 @@ describe('SHE Software Test', function () {
                         const recordText = await allRecords[i].getText();
                         if (recordText.includes(globals.variables.descriptionText)) {
                             error('RECORD STILL AVAILABLE')
-                        }
+                        };
                     };
                 } catch (err) {
                     'Error! ' + err;
-                }
+                };
             }),
             after(async function() {
                 await driver.quit();
-            })
+            });
     })
 })
